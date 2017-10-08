@@ -101,7 +101,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Site.css" />
+    <Content Include="Dev.txt" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\Counters\Counters.js" />
+    <Content Include="Scripts\Counters\JSExamples.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\_ViewStart.cshtml" />
