@@ -104,8 +104,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Dev.txt" />
     <Content Include="packages.config" />
+    <Content Include="ReferenceImplementation\metronome.js" />
+    <Content Include="ReferenceImplementation\metronomeworker.js" />
     <Content Include="Scripts\Counters\Counters.js" />
     <Content Include="Scripts\Counters\JSExamples.js" />
+    <Content Include="Scripts\Counters\metronome.js" />
+    <Content Include="Scripts\Counters\metronomeworker.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -138,7 +142,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="js\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
