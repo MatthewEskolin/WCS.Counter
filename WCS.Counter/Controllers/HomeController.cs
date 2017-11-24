@@ -13,5 +13,10 @@ namespace WCS.Counter.Controllers
         {
             return View();
         }
+
+        public ActionResult MyCounter()
+        {
+            return View();
+        }
     }
 }

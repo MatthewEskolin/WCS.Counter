@@ -24,6 +24,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -106,13 +107,15 @@
     <Content Include="packages.config" />
     <Content Include="ReferenceImplementation\metronome.js" />
     <Content Include="ReferenceImplementation\metronomeworker.js" />
-    <Content Include="Scripts\Counters\Counters.js" />
-    <Content Include="Scripts\Counters\JSExamples.js" />
-    <Content Include="Scripts\Counters\metronome.js" />
-    <Content Include="Scripts\Counters\metronomeworker.js" />
+    <Content Include="Scripts\AudioContextMonkeyPatch.js" />
+    <Content Include="Scripts\Counters.js" />
+    <Content Include="Scripts\JSExamples.js" />
+    <Content Include="Scripts\metronome.js" />
+    <Content Include="Scripts\metronomeworker.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\MyCounter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

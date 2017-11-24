@@ -18,6 +18,8 @@ namespace WCS.Counter
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/counters").Include("~/Scripts/metronome.js", "~/Scripts/metronomeworker.js", "~/Scripts/AudioContextMonkeyPatch.js"));
+
         }
 
 
