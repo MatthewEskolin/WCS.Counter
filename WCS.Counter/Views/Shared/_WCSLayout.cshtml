@@ -7,17 +7,19 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/counters")    
+    @Scripts.Render("~/bundles/countersWCS")
+    
+
 
 </head>
 <body>
-<div class="container body-content">
-    @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - West Coast Swing Counter</p>
-    </footer>
-</div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - West Coast Swing Counter</p>
+        </footer>
+    </div>
 
 </body>
 </html>

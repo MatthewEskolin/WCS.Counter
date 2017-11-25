@@ -111,11 +111,14 @@
     <Content Include="Scripts\Counters.js" />
     <Content Include="Scripts\JSExamples.js" />
     <Content Include="Scripts\metronome.js" />
+    <Content Include="Scripts\metronomeWCS.js" />
     <Content Include="Scripts\metronomeworker.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Scripts\metronomeworkerWCS.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\MyCounter.cshtml" />
+    <Content Include="Views\Shared\_WCSLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

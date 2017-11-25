@@ -16,7 +16,7 @@ namespace WCS.Counter.Controllers
 
         public ActionResult MyCounter()
         {
-            return View();
+            return View("MyCounter", "_WCSLayout");
         }
     }
 }
