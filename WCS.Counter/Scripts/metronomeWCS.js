@@ -2,7 +2,16 @@
 var isPlaying = false;      // Are we currently playing?
 var startTime;              // The start time of the entire sequence.
 var current16thNote;        // What note is currently last scheduled?
-var tempo = 120.0;          // tempo (in beats per minute)
+var current8beat;
+var current6beat;
+
+
+var initialFlag = -1;
+var fourCount = 0;
+
+
+
+var tempo = 20.0;          // tempo (in beats per minute)
 var lookahead = 25.0;       // How frequently to call scheduling function (in milliseconds)
 var scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec) // This is calculated from lookahead, and overlaps  with next interval (in case the timer is late)
 var nextNoteTime = 0.0;     // when the next note is due.
@@ -17,6 +26,10 @@ var canvasContext8;
 
 
 var last16thNoteDrawn = -1; // the last "box" we drew on the screen
+
+
+
+
 var notesInQueue = [];      // the notes that have been put into the web audio, and may or may not have played yet. {note, time}
 var timerWorker = null;     // The Web Worker used to fire timer messages
 
@@ -34,21 +47,74 @@ window.requestAnimFrame = (function () {
         };
 })();
 
+
+
+
+
+
 function nextNote() {
     // Advance current note and time by a 16th note...
     var secondsPerBeat = 60.0 / tempo;    // Notice this picks up the CURRENT 
     // tempo value to calculate beat length.
+
     nextNoteTime += 0.25 * secondsPerBeat;    // Add beat length to last beat time
 
+
+    if (fourCount == 1) {
+
+        if (initialFlag == 1) {
+
+            advanceCurrent6beat();
+            advanceCurrent8beat();  
+        }
+
+    }
+
+    //countdown
+    fourCount++;
+    if (fourCount == 5) {
+        initialFlag = 1;
+        fourCount = 1;
+    }
+
     current16thNote++;    // Advance the beat number, wrap to zero
-    if (current16thNote == 16) {
-        current16thNote = 0;
+    if (current16thNote == 17) {
+        current16thNote = 1;
     }
 }
+
+
+
+
+function advanceCurrent6beat() {
+
+    current6beat++;
+    if (current6beat == 7) {
+        current6beat = 1;
+    }
+
+}
+
+function advanceCurrent8beat() {
+
+    current8beat++;
+    if (current8beat == 9) {
+        current8beat = 1;
+    }
+
+
+}
+
+
 
 function scheduleNote(beatNumber, time) {
     // push the note on the queue, even if we're not playing.
     notesInQueue.push({ note: beatNumber, time: time });
+
+
+
+    if (beatNumber % 4 != 1)
+        return;
 
     //if ((noteResolution == 1) && (beatNumber % 2))
     //    return; // we're not playing non-8th 16th notes
@@ -80,7 +146,12 @@ function play() {
     isPlaying = !isPlaying;
 
     if (isPlaying) { // start playing
-        current16thNote = 0;
+        current16thNote = 1;
+        current6beat = 1;
+        current8beat = 1;
+        fourCount = 1;
+        initialFlag = -1;
+
         nextNoteTime = audioContext.currentTime;
         timerWorker.postMessage("start");
         return "stop";
@@ -103,6 +174,9 @@ function resetCanvas(e) {
     window.scrollTo(0, 0);
 }
 
+var last6beat = -1;
+var last8beat = -1;
+
 function draw() {
     var currentNote = last16thNoteDrawn;
     var currentTime = audioContext.currentTime;
@@ -117,21 +191,60 @@ function draw() {
         var x = Math.floor(canvas.width / 18);
 
 
-        canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-        canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
 
 
-        for (var i = 0; i < 6; i++) {
-            canvasContext.fillStyle = (currentNote == i) ?
-                ((currentNote % 6 === 0) ? "blue" : "blue") : "black";
-            canvasContext.fillRect(x * (i + 1), x, x / 2, x / 2);
+        //the original implementation colored every 16th note, for now, we want to only color the the quarter notes...
+        if (last6beat != current6beat) {
+
+
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
+
+
+            for (var i = 1; i < 7; i++) {
+                canvasContext.fillStyle = (current6beat == i) ?
+                    ((current6beat % 6 === 1) ? "blue" : "green") : "black";
+                canvasContext.fillRect(x * (i + 1), x, x / 2, x / 2);
+            }
+
+
+            last6beat = current6beat;
         }
 
-        for (var j = 0; j < 8; j++) {
-            canvasContext8.fillStyle = (currentNote == j) ?
-                ((currentNote % 8 === 0) ? "blue" : "blue") : "black";
-            canvasContext8.fillRect(x * (j + 1), x, x / 2, x / 2);
+
+
+        if (last8beat != current8beat) {
+
+
+
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
+
+
+            //Draw 8 Beats.
+            for (var j = 1; j < 9; j++) {
+                canvasContext8.fillStyle = (current8beat == j) ?
+                    ((current8beat % 8 === 0) ? "blue" : "green") : "black";
+                canvasContext8.fillRect(x * (j + 1), x, x / 2, x / 2);
+            }
+
+
+
+
+
+            last8beat = current8beat;
         }
+
+
+
+
+
+
+        //Update Counters
+        $('#spnCurrent16th').text(currentNote);
+        $('#spnCurrent4').text(current6beat);
+        $('#spnCurrent8').text(current8beat);
+
 
 
 
