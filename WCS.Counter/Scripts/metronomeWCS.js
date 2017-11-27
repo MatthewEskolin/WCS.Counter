@@ -11,7 +11,7 @@ var fourCount = 0;
 
 
 
-var tempo = 20.0;          // tempo (in beats per minute)
+var tempo = 60.0;          // tempo (in beats per minute)
 var lookahead = 25.0;       // How frequently to call scheduling function (in milliseconds)
 var scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec) // This is calculated from lookahead, and overlaps  with next interval (in case the timer is late)
 var nextNoteTime = 0.0;     // when the next note is due.
@@ -198,7 +198,6 @@ function draw() {
 
 
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-            canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
 
 
             for (var i = 1; i < 7; i++) {
@@ -217,7 +216,6 @@ function draw() {
 
 
 
-            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
             canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
 
 
