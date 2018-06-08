@@ -11,7 +11,7 @@ var fourCount = 0;
 
 
 
-var tempo = 60.0;          // tempo (in beats per minute)
+var tempo = 120.0;          // tempo (in beats per minute)
 var lookahead = 25.0;       // How frequently to call scheduling function (in milliseconds)
 var scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec) // This is calculated from lookahead, and overlaps  with next interval (in case the timer is late)
 var nextNoteTime = 0.0;     // when the next note is due.
@@ -144,10 +144,11 @@ function scheduler() {
     }
 }
 
-function play() {
+function play(input1) {
     isPlaying = !isPlaying;
 
     if (isPlaying) { // start playing
+        input1.value = "Stop";
         current16thNote = 1;
         current6beat = 1;
         current8beat = 1;
@@ -158,6 +159,8 @@ function play() {
         timerWorker.postMessage("start");
         return "stop";
     } else {
+        input1.value = "Play";
+         
         timerWorker.postMessage("stop");
         return "play";
     }
