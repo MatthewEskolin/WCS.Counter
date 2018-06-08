@@ -11,7 +11,7 @@ var fourCount = 0;
 
 
 
-var tempo = 20.0;          // tempo (in beats per minute)
+var tempo = 120.0;          // tempo (in beats per minute)
 var lookahead = 25.0;       // How frequently to call scheduling function (in milliseconds)
 var scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec) // This is calculated from lookahead, and overlaps  with next interval (in case the timer is late)
 var nextNoteTime = 0.0;     // when the next note is due.
@@ -124,7 +124,9 @@ function scheduleNote(beatNumber, time) {
     // create an oscillator
     var osc = audioContext.createOscillator();
     osc.connect(audioContext.destination);
-    if (beatNumber % 6 === 0)    // beat 0 == high pitch
+
+
+    if (current6beat == 6 || current8beat == 8)    // beat 0 == high pitch
         osc.frequency.value = 880.0;
     else                 // other 16th notes = low pitch
         osc.frequency.value = 220.0;
@@ -142,10 +144,11 @@ function scheduler() {
     }
 }
 
-function play() {
+function play(input1) {
     isPlaying = !isPlaying;
 
     if (isPlaying) { // start playing
+        input1.value = "Stop";
         current16thNote = 1;
         current6beat = 1;
         current8beat = 1;
@@ -156,6 +159,8 @@ function play() {
         timerWorker.postMessage("start");
         return "stop";
     } else {
+        input1.value = "Play";
+         
         timerWorker.postMessage("stop");
         return "play";
     }
@@ -198,7 +203,6 @@ function draw() {
 
 
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-            canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
 
 
             for (var i = 1; i < 7; i++) {
@@ -217,14 +221,13 @@ function draw() {
 
 
 
-            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
             canvasContext8.clearRect(0, 0, canvas8.width, canvas8.height);
 
 
             //Draw 8 Beats.
             for (var j = 1; j < 9; j++) {
                 canvasContext8.fillStyle = (current8beat == j) ?
-                    ((current8beat % 8 === 0) ? "blue" : "green") : "black";
+                    ((current8beat % 8 === 1) ? "blue" : "green") : "black";
                 canvasContext8.fillRect(x * (j + 1), x, x / 2, x / 2);
             }
 
